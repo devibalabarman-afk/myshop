@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2e7d32">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>MyShop – Flower Plants Online</title>
+<style>
+:root{--blue:#2e7d32;--dark:#1b5e20;--bg:#f2f7f2;--yellow:#ffe500;--green:#388e3c;--ink:#212121;--mute:#6b7280}
+*{box-sizing:border-box;margin:0}
+body{font-family:system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+.top{background:var(--blue);color:#fff;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px #0003}
+.bar{display:flex;align-items:center;gap:14px;padding:10px 4%;flex-wrap:wrap}
+.logo{font-size:1.6rem;font-weight:800;font-style:italic}.logo span{color:var(--yellow)}.logo i{font-size:.8rem;margin-left:2px}
+.search{flex:1;min-width:200px;display:flex}
+.search input{flex:1;padding:11px 14px;border:0;border-radius:4px 0 0 4px;font-size:1rem;outline:0}
+.search button{border:0;background:#fff;padding:0 14px;border-radius:0 4px 4px 0;cursor:pointer}
+.auth{display:flex;gap:8px;align-items:center}
+.auth a,.auth button{background:#fff;color:var(--blue);border:0;padding:8px 16px;border-radius:4px;font-weight:600;cursor:pointer;transition:.2s}
+.auth a.ghost{background:transparent;color:#fff;border:1px solid #fff}
+.auth a:hover,.auth button:hover{transform:translateY(-2px)}
+.cartlink{position:relative;font-weight:600;padding:6px 10px}
+.cartlink b{background:#ff6161;border-radius:50%;font-size:.75rem;min-width:20px;height:20px;display:inline-grid;place-items:center;margin-left:4px}
+.cats{display:flex;gap:6px;overflow-x:auto;padding:0 4% 8px;scrollbar-width:none}
+.cats a{white-space:nowrap;padding:5px 14px;border-radius:20px;background:#ffffff1f;font-size:.9rem;transition:.2s}
+.cats a:hover,.cats a.on{background:#fff;color:var(--blue)}
+main{max-width:1280px;margin:auto;padding:16px 3%;min-height:70vh;animation:fade .35s}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+.hero{background:linear-gradient(120deg,var(--dark),#66bb6a);color:#fff;border-radius:12px;padding:46px 5%;display:flex;justify-content:space-between;align-items:center;gap:20px;overflow:hidden}
+.hero h1{font-size:clamp(1.6rem,4vw,2.8rem)}.hero p{margin:10px 0 18px;opacity:.9}
+.hero .big{font-size:clamp(4rem,12vw,8rem);animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-12px)}}
+.catgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px;margin:18px 0}
+.catgrid a{background:#fff;border-radius:10px;padding:16px 8px;text-align:center;font-weight:600;transition:.25s}
+.catgrid a span{display:block;font-size:2rem}
+.catgrid a:hover{transform:translateY(-4px);box-shadow:0 6px 16px #0002;color:var(--blue)}
+h2.sec{margin:26px 0 12px;font-size:1.4rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.card{background:#fff;border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px;transition:.25s}
+.card:hover{transform:translateY(-5px);box-shadow:0 10px 24px #0002}
+.card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;transition:.3s}
+.card:hover img{transform:scale(1.04)}
+.card h3{font-size:.95rem;margin-top:8px;font-weight:600;height:2.5em;overflow:hidden}
+.badge{background:var(--green);color:#fff;padding:2px 7px;border-radius:4px;font-size:.8rem;font-weight:700}
+.price b{font-size:1.1rem}.price s{color:var(--mute);font-size:.85rem;margin:0 4px}.off{color:var(--green);font-weight:700;font-size:.85rem}
+.btn{background:var(--blue);color:#fff;border:0;padding:10px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.95rem;transition:.2s;margin-top:auto}
+.btn:hover{background:var(--dark);transform:scale(1.02)}.btn.alt{background:#fb641b}.btn.out{background:#fff;color:var(--blue);border:1px solid var(--blue)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:#fff;padding:12px;border-radius:10px;margin-bottom:14px}
+select,input,textarea{font:inherit;padding:9px 10px;border:1px solid #ccd;border-radius:6px}
+.panel{background:#fff;border-radius:10px;padding:20px;margin-bottom:14px}
+.detail{display:grid;grid-template-columns:minmax(260px,1fr) 1.2fr;gap:28px}
+.detail img{width:100%;border-radius:12px}.detail .price b{font-size:1.8rem}
+.row{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid #eee;flex-wrap:wrap}
+.row img{width:80px;height:80px;border-radius:8px}.row .grow{flex:1;min-width:160px}
+.qty{display:flex;align-items:center;gap:8px}.qty button{width:30px;height:30px;border-radius:50%;border:1px solid #bbb;background:#fff;cursor:pointer;font-size:1.1rem}
+.link{background:none;border:0;color:var(--blue);cursor:pointer;font-weight:600}
+.cols{display:grid;grid-template-columns:2fr 1fr;gap:14px;align-items:start}
+.sum div{display:flex;justify-content:space-between;padding:6px 0}.sum .tot{font-weight:800;font-size:1.2rem;border-top:1px dashed #bbb;margin-top:6px;padding-top:12px}
+.form{display:grid;gap:12px;max-width:440px}.form.wide{max-width:none;grid-template-columns:1fr 1fr}.form .full{grid-column:1/-1}
+.empty{text-align:center;padding:50px 10px;color:var(--mute)}.empty .big{font-size:4rem}
+.tag{background:#e8f5e9;color:var(--blue);padding:3px 10px;border-radius:12px;font-size:.8rem;font-weight:700}
+.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,80px);background:#222;color:#fff;padding:12px 22px;border-radius:30px;opacity:0;transition:.3s;z-index:20}
+.toast.show{transform:translate(-50%,0);opacity:1}
+footer{text-align:center;padding:24px;color:var(--mute);font-size:.9rem}
+@media(max-width:800px){.cols,.detail{grid-template-columns:1fr}.cartlink span{display:none}.hero .big{display:none}.form.wide{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="bar">
+    <a class="logo" href="#/">My<span>Shop</span><i>✦</i></a>
+    <form class="search" id="searchForm">
+      <input id="searchInput" type="search" placeholder="Search for flower plants..." aria-label="Search">
+      <button type="submit">🔍</button>
+    </form>
+    <div id="authArea" class="auth"></div>
+    <a class="cartlink" href="#/cart">🛒 <span>Cart</span><b id="cartCount">0</b></a>
+  </div>
+  <nav class="cats" id="catNav"></nav>
+</header>
+<main id="app"></main>
+<footer>© 2026 MyShop · Live plants & flowers. A demo store. Prices in ₹.</footer>
+<div id="toast" class="toast"></div>
+<script>
+// ✏️ EDIT YOUR PLANTS HERE. price = selling price, mrp = original price (₹).
+// To use a real photo, add:  image: "https://your-image-url.jpg"
+const CATEGORIES = [
+  { name: "Roses", icon: "🌹" }, { name: "Flowering Plants", icon: "🌺" },
+  { name: "Indoor Plants", icon: "🪴" }, { name: "Succulents", icon: "🌵" },
+  { name: "Pots & Planters", icon: "🏺" }, { name: "Seeds & Care", icon: "🌱" }
+];
+const PRODUCTS = [
+  { id: 1, name: "Hybrid Red Rose Plant (Live, with Bud)", category: "Roses", price: 199, mrp: 349, rating: 4.5, reviews: 8420, emoji: "🌹", color: "#fee2e2", trending: true, bestseller: true, desc: "Healthy grafted rose plant with fragrant deep-red blooms. Needs 5-6 hours of sunlight. Delivered in a nursery bag." },
+  { id: 2, name: "Yellow Rose Plant (Live)", category: "Roses", price: 179, mrp: 299, rating: 4.3, reviews: 3120, emoji: "🌼", color: "#fef9c3", bestseller: true, desc: "Bright yellow rose that blooms through most of the year in good sunlight." },
+  { id: 3, name: "Pink Hibiscus Plant (Live)", category: "Flowering Plants", price: 249, mrp: 449, rating: 4.4, reviews: 5210, emoji: "🌺", color: "#fce7f3", trending: true, bestseller: true, desc: "Large showy pink flowers, easy to grow in pots or the garden. Loves full sun." },
+  { id: 4, name: "Sunflower Plant (Dwarf, Live)", category: "Flowering Plants", price: 149, mrp: 299, rating: 4.2, reviews: 2670, emoji: "🌻", color: "#fef3c7", trending: true, desc: "Compact sunflower that blooms in pots and balconies. Cheerful golden flowers." },
+  { id: 5, name: "Jasmine (Mogra) Plant (Live)", category: "Flowering Plants", price: 229, mrp: 399, rating: 4.6, reviews: 9340, emoji: "🌼", color: "#f0fdf4", trending: true, bestseller: true, desc: "Intensely fragrant white flowers, loved for garlands and fragrance. Grows well in warm climates." },
+  { id: 6, name: "Marigold Plant Combo (Set of 3)", category: "Flowering Plants", price: 199, mrp: 399, rating: 4.1, reviews: 4180, emoji: "🏵️", color: "#ffedd5", bestseller: true, desc: "Three orange and yellow marigold plants, perfect for festivals and pest control in the garden." },
+  { id: 7, name: "Lavender Plant (Live)", category: "Flowering Plants", price: 299, mrp: 549, rating: 4.2, reviews: 1890, emoji: "🪻", color: "#ede9fe", trending: true, desc: "Calming fragrance and purple blooms. Needs well-drained soil and plenty of sun." },
+  { id: 8, name: "Lotus Plant with Ceramic Pot", category: "Flowering Plants", price: 349, mrp: 699, rating: 4.3, reviews: 1250, emoji: "🪷", color: "#fce7f3", desc: "Beautiful water lotus ready to grow in a bowl of water on your terrace or balcony." },
+  { id: 9, name: "Money Plant in Ceramic Pot", category: "Indoor Plants", price: 249, mrp: 499, rating: 4.5, reviews: 12760, emoji: "🌿", color: "#dcfce7", bestseller: true, trending: true, desc: "Air-purifying, low-maintenance indoor plant in a stylish pot. Grows in water or soil." },
+  { id: 10, name: "Peace Lily Plant (Flowering)", category: "Indoor Plants", price: 399, mrp: 749, rating: 4.4, reviews: 3980, emoji: "🪴", color: "#e0f2fe", trending: true, desc: "Elegant white flowers that thrive in low light. Great for bedrooms and offices." },
+  { id: 11, name: "Snake Plant (Air Purifying)", category: "Indoor Plants", price: 349, mrp: 699, rating: 4.6, reviews: 15620, emoji: "🪴", color: "#d1fae5", bestseller: true, desc: "Almost impossible to kill. Needs very little water and purifies indoor air." },
+  { id: 12, name: "Aloe Vera Plant (Live)", category: "Succulents", price: 149, mrp: 299, rating: 4.4, reviews: 10340, emoji: "🌵", color: "#ecfccb", bestseller: true, desc: "Healthy aloe vera in a nursery pot. Useful for skin and hair care and easy to grow." },
+  { id: 13, name: "Mini Succulent Combo (Set of 4)", category: "Succulents", price: 299, mrp: 599, rating: 4.3, reviews: 6120, emoji: "🌵", color: "#ccfbf1", trending: true, desc: "Four assorted succulents in small pots. Perfect for desks and window sills." },
+  { id: 14, name: "Ceramic Planter Pots (Set of 3)", category: "Pots & Planters", price: 499, mrp: 999, rating: 4.2, reviews: 2840, emoji: "🏺", color: "#ffedd5", desc: "Three matching ceramic pots with drainage holes, in small, medium and large sizes." },
+  { id: 15, name: "Organic Potting Soil Mix (5 kg)", category: "Seeds & Care", price: 199, mrp: 349, rating: 4.3, reviews: 7210, emoji: "🌱", color: "#e7e5e4", bestseller: true, desc: "Nutrient-rich mix of cocopeat, compost and vermicompost for healthy flowering plants." },
+  { id: 16, name: "Flower Seeds Combo (20 Varieties)", category: "Seeds & Care", price: 149, mrp: 299, rating: 4.1, reviews: 5460, emoji: "🌷", color: "#fae8ff", trending: true, desc: "20 packets including marigold, zinnia, cosmos, petunia and more, with a growing guide." }
+];
+
+let route = '', nextRoute = '';
+function nav(h) { route = h; render(); }
+// ---------- helpers ----------
+const $ = s => document.querySelector(s);
+// Paste your Google Apps Script "Web app" URL between the quotes to receive orders in a Google Sheet and by email.
+const ORDER_WEBHOOK = '';
+// Your WhatsApp number with country code, digits only. Example for India: '919876543210'. Leave '' to hide the WhatsApp button.
+const SHOP_WHATSAPP = '916001749707';
+function waLink(o) {
+  const lines = o.items.map(i => '- ' + find(i.id).name + ' x' + i.qty).join('\n');
+  const text = 'New MyShop order ' + o.id + '\nName: ' + o.addr.name + '\nPhone: ' + o.addr.phone + '\nAddress: ' + o.addr.address + ', ' + o.addr.city + ' - ' + o.addr.pin +
+    '\nItems:\n' + lines + '\nTotal: Rs ' + o.total + '\nPayment: ' + o.pay;
+  return 'https://wa.me/' + SHOP_WHATSAPP.replace(/\D/g, '') + '?text=' + encodeURIComponent(text);
+}
+function sendOrder(o) {
+  if (!ORDER_WEBHOOK) return;
+  const items = o.items.map(i => ({ name: find(i.id).name, qty: i.qty, price: find(i.id).price }));
+  fetch(ORDER_WEBHOOK, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({ id: o.id, date: new Date(o.date).toLocaleString('en-IN'), email: o.email, name: o.addr.name, phone: o.addr.phone,
+      address: o.addr.address, city: o.addr.city, pin: o.addr.pin, pay: o.pay, total: o.total, items }) }).catch(() => {});
+}
+
+const ls = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const money = n => '₹' + n.toLocaleString('en-IN');
+const find = id => PRODUCTS.find(p => p.id == id);
+const off = p => Math.round((1 - p.price / p.mrp) * 100);
+const stars = r => '★'.repeat(Math.round(r)) + '☆'.repeat(5 - Math.round(r));
+const img = p => p.image || 'data:image/svg+xml,' + encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><rect width="300" height="300" fill="${p.color}"/><text x="150" y="195" font-size="120" text-anchor="middle">${p.emoji}</text></svg>`);
+
+let cart = ls('myshop_cart', []);       // [{id, qty}]
+let user = ls('myshop_user', null);     // logged-in user
+const cartTotal = () => cart.reduce((s, c) => s + find(c.id).price * c.qty, 0);
+const cartSavings = () => cart.reduce((s, c) => s + (find(c.id).mrp - find(c.id).price) * c.qty, 0);
+
+function persist() { save('myshop_cart', cart); $('#cartCount').textContent = cart.reduce((s, c) => s + c.qty, 0); }
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t.h); t.h = setTimeout(() => t.classList.remove('show'), 1800); }
+function addCart(id) { const i = cart.find(c => c.id == id); i ? i.qty++ : cart.push({ id: +id, qty: 1 }); persist(); toast('✅ Added to cart'); }
+
+// ---------- views ----------
+const card = p => `<article class="card"><a href="#/product/${p.id}"><img src="${img(p)}" alt="${esc(p.name)}" loading="lazy"><h3>${esc(p.name)}</h3></a>
+<div><span class="badge">${p.rating} ★</span> <small>(${p.reviews.toLocaleString('en-IN')})</small></div>
+<div class="price"><b>${money(p.price)}</b> <s>${money(p.mrp)}</s> <span class="off">${off(p)}% off</span></div>
+<button class="btn" data-add="${p.id}">Add to Cart</button></article>`;
+
+function home() {
+  return `<section class="hero"><div><h1>Fresh Flower Plants, Delivered to Your Door!</h1><p>Up to 50% off on roses, hibiscus, jasmine, indoor plants & more.</p><a class="btn alt" style="display:inline-block" href="#/products">Shop Plants</a></div><div class="big">🌸</div></section>
+  <div class="catgrid">${CATEGORIES.map(c => `<a href="#/products?cat=${c.name}"><span>${c.icon}</span>${c.name}</a>`).join('')}</div>
+  <h2 class="sec">🔥 Trending Products</h2><div class="grid">${PRODUCTS.filter(p => p.trending).slice(0, 8).map(card).join('')}</div>
+  <h2 class="sec">⭐ Best Sellers</h2><div class="grid">${PRODUCTS.filter(p => p.bestseller).slice(0, 8).map(card).join('')}</div>`;
+}
+
+function products(q) {
+  const cat = q.get('cat') || '', s = (q.get('q') || '').toLowerCase(), sort = q.get('sort') || '';
+  let list = PRODUCTS.filter(p => (!cat || p.category === cat) && (!s || (p.name + p.category + p.desc).toLowerCase().includes(s)));
+  if (sort === 'low') list.sort((a, b) => a.price - b.price); if (sort === 'high') list.sort((a, b) => b.price - a.price);
+  return `<div class="tools"><b>${list.length} products</b>${s ? ` for "<i>${esc(s)}</i>"` : ''}
+  <select id="fCat"><option value="">All Categories</option>${CATEGORIES.map(c => `<option ${c.name === cat ? 'selected' : ''}>${c.name}</option>`).join('')}</select>
+  <select id="fSort"><option value="">Sort: Relevance</option><option value="low" ${sort === 'low' ? 'selected' : ''}>Price: Low to High</option><option value="high" ${sort === 'high' ? 'selected' : ''}>Price: High to Low</option></select></div>
+  ${list.length ? `<div class="grid">${list.map(card).join('')}</div>` : `<div class="empty"><div class="big">🔎</div><p>No products found. Try another search.</p></div>`}`;
+}
+
+function detail(id) {
+  const p = find(id); if (!p) return `<div class="empty"><div class="big">😕</div><p>Product not found.</p></div>`;
+  return `<div class="panel detail"><img src="${img(p)}" alt="${esc(p.name)}"><div>
+  <span class="tag">${p.category}</span><h1 style="margin:10px 0">${esc(p.name)}</h1>
+  <p><span class="badge">${p.rating} ★</span> <span style="color:#f5a623">${stars(p.rating)}</span> <small>${p.reviews.toLocaleString('en-IN')} ratings</small></p>
+  <p class="price" style="margin:14px 0"><b>${money(p.price)}</b> <s>${money(p.mrp)}</s> <span class="off">${off(p)}% off</span></p>
+  <p style="color:#444;line-height:1.6">${esc(p.desc)}</p><p style="margin:10px 0;color:var(--green)">✔ Free delivery · Healthy plant guarantee</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px"><button class="btn out" data-add="${p.id}">Add to Cart</button><button class="btn alt" data-buy="${p.id}">Buy Now</button></div></div></div>
+  <h2 class="sec">More in ${p.category}</h2><div class="grid">${PRODUCTS.filter(x => x.category === p.category && x.id !== p.id).slice(0, 4).map(card).join('')}</div>`;
+}
+
+function cartView() {
+  if (!cart.length) return `<div class="panel empty"><div class="big">🛒</div><h2>Your cart is empty</h2><p style="margin:8px 0 16px">Add items to get started.</p><a class="btn" style="display:inline-block" href="#/products">Start Shopping</a></div>`;
+  return `<div class="cols"><div class="panel"><h2>My Cart (${cart.length})</h2>${cart.map(c => { const p = find(c.id); return `<div class="row"><img src="${img(p)}" alt=""><div class="grow"><a href="#/product/${p.id}"><b>${esc(p.name)}</b></a><div class="price"><b>${money(p.price)}</b> <s>${money(p.mrp)}</s></div></div>
+  <div class="qty"><button data-dec="${p.id}">−</button><b>${c.qty}</b><button data-inc="${p.id}">+</button></div><b>${money(p.price * c.qty)}</b><button class="link" data-rm="${p.id}">Remove</button></div>`; }).join('')}</div>
+  <div class="panel sum"><h3>PRICE DETAILS</h3><div><span>Total MRP</span><span>${money(cartTotal() + cartSavings())}</span></div><div><span>Discount</span><span style="color:var(--green)">− ${money(cartSavings())}</span></div><div><span>Delivery</span><span style="color:var(--green)">FREE</span></div>
+  <div class="tot"><span>Total Amount</span><span>${money(cartTotal())}</span></div><a class="btn alt" style="display:block;text-align:center;margin-top:14px" href="#/checkout">Place Order</a></div></div>`;
+}
+
+function needLogin() { if (user) return false; nextRoute = route; setTimeout(() => nav('#/login')); return true; }
+
+function checkout() {
+  if (!cart.length) { setTimeout(() => nav('#/cart')); return ''; }
+  const a = ls('myshop_addr', {});
+  const f = (n, l, t = 'text') => `<label>${l}<input name="${n}" type="${t}" value="${esc(a[n] || '')}" required style="width:100%"></label>`;
+  return `<div class="cols"><form class="panel form wide" data-form="order"><h2 class="full">Delivery Address</h2>${f('name', 'Full Name')}${f('phone', 'Phone Number', 'tel')}<label class="full">Email (optional)<input name="email" type="email" value="${esc(a.email || '')}" style="width:100%"></label>
+  <label class="full">Address<textarea name="address" required rows="3" style="width:100%">${esc(a.address || '')}</textarea></label>${f('city', 'City')}${f('pin', 'PIN Code')}
+  <label class="full">Payment <select name="pay" style="width:100%"><option>Cash on Delivery</option><option>UPI (demo)</option><option>Card (demo)</option></select></label>
+  <button class="btn alt full">Confirm Order · ${money(cartTotal())}</button></form>
+  <div class="panel sum"><h3>ORDER SUMMARY</h3>${cart.map(c => `<div><span>${esc(find(c.id).name.slice(0, 26))}… ×${c.qty}</span><span>${money(find(c.id).price * c.qty)}</span></div>`).join('')}<div class="tot"><span>Total</span><span>${money(cartTotal())}</span></div></div></div>`;
+}
+
+function auth(mode) {
+  const s = mode === 'signup';
+  return `<form class="panel form" style="margin:30px auto" data-form="${mode}"><h2>${s ? 'Create your account' : 'Login to MyShop'}</h2>
+  ${s ? '<input name="name" placeholder="Full name" required>' : ''}<input name="email" type="email" placeholder="Email" required><input name="password" type="password" placeholder="Password (min 4 chars)" minlength="4" required>
+  <button class="btn">${s ? 'Sign Up' : 'Login'}</button><p>${s ? 'Already have an account? <a class="link" href="#/login">Login</a>' : 'New here? <a class="link" href="#/signup">Create an account</a>'}</p></form>`;
+}
+
+function profile() {
+  if (needLogin()) return '';
+  const n = ls('myshop_orders', []).filter(o => o.email === user.email).length;
+  return `<div class="panel"><h2>👤 My Profile</h2><p style="margin:14px 0"><b>Name:</b> ${esc(user.name)}</p><p><b>Email:</b> ${esc(user.email)}</p><p style="margin:14px 0"><b>Orders placed:</b> ${n}</p>
+  <a class="btn" style="display:inline-block" href="#/orders">View Orders</a> <button class="btn out" data-logout>Logout</button></div>`;
+}
+
+function orders() {
+  const list = ls('myshop_orders', []).reverse();
+  if (!list.length) return `<div class="panel empty"><div class="big">📦</div><h2>No orders yet</h2><p style="margin-top:8px">Your orders will appear here.</p></div>`;
+  return `<h2 class="sec">📦 Order History</h2>${list.map(o => `<div class="panel"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><b>Order #${o.id}</b><span class="tag">Confirmed</span></div>
+  <small>${new Date(o.date).toLocaleString('en-IN')} · ${esc(o.pay)}</small>${o.items.map(i => `<div class="row"><img src="${img(find(i.id))}" alt=""><div class="grow">${esc(find(i.id).name)} × ${i.qty}</div><b>${money(find(i.id).price * i.qty)}</b></div>`).join('')}
+  <p style="margin-top:10px"><b>Total: ${money(o.total)}</b><br><small>Deliver to: ${esc(o.addr.name)}, ${esc(o.addr.address)}, ${esc(o.addr.city)} - ${esc(o.addr.pin)}</small></p>${SHOP_WHATSAPP ? `<a class="btn alt" style="display:inline-block;margin-top:10px" target="_blank" rel="noopener" href="${waLink(o)}">Send order on WhatsApp</a>` : ''}</div>`).join('')}`;
+}
+
+// ---------- router & header ----------
+function render() {
+  const [path, qs = ''] = route.slice(1).split('?'), q = new URLSearchParams(qs), [, page = '', arg] = path.split('/');
+  const views = { '': home, products: () => products(q), product: () => detail(arg), cart: cartView, checkout, login: () => auth('login'), signup: () => auth('signup'), profile, orders };
+  $('#app').innerHTML = (views[page] || home)();
+  $('#searchInput').value = page === 'products' ? q.get('q') || '' : '';
+  $('#catNav').innerHTML = `<a href="#/products" class="${page === 'products' && !q.get('cat') ? 'on' : ''}">All</a>` + CATEGORIES.map(c => `<a href="#/products?cat=${c.name}" class="${q.get('cat') === c.name ? 'on' : ''}">${c.icon} ${c.name}</a>`).join('');
+  $('#authArea').innerHTML = '<a href="#/orders">My Orders</a>';
+  window.scrollTo(0, 0);
+}
+const go = (cat, sort, s) => { const p = new URLSearchParams(); if (cat) p.set('cat', cat); if (sort) p.set('sort', sort); if (s) p.set('q', s); nav('#/products' + (p.toString() ? '?' + p : '')); };
+
+// ---------- events ----------
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-add],[data-buy],[data-inc],[data-dec],[data-rm],[data-logout]'); if (!t) return;
+  const d = t.dataset, id = d.add || d.buy || d.inc || d.dec || d.rm;
+  if (d.add) addCart(id);
+  if (d.buy) { if (!cart.find(c => c.id == id)) addCart(id); nav('#/checkout'); }
+  if (d.inc) cart.find(c => c.id == id).qty++;
+  if (d.dec) { const i = cart.find(c => c.id == id); if (--i.qty < 1) cart = cart.filter(c => c !== i); }
+  if (d.rm) { cart = cart.filter(c => c.id != id); toast('Item removed'); }
+  if (d.inc || d.dec || d.rm) { persist(); render(); }
+  if (d.logout) { user = null; localStorage.removeItem('myshop_user'); nav('#/'); render(); toast('Logged out'); }
+});
+document.addEventListener('change', e => {
+  if (e.target.id === 'fCat' || e.target.id === 'fSort') { const q = new URLSearchParams(route.split('?')[1] || ''); go($('#fCat').value, $('#fSort').value, q.get('q')); }
+});
+$('#searchForm').addEventListener('submit', e => { e.preventDefault(); go('', '', $('#searchInput').value.trim()); });
+document.addEventListener('submit', e => {
+  const form = e.target.closest('[data-form]'); if (!form) return; e.preventDefault();
+  const f = Object.fromEntries(new FormData(form)), type = form.dataset.form, users = ls('myshop_users', []);
+  if (type === 'signup') {
+    if (users.some(u => u.email === f.email)) return toast('⚠️ Email already registered');
+    users.push(f); save('myshop_users', users); user = { name: f.name, email: f.email };
+  }
+  if (type === 'login') {
+    const u = users.find(u => u.email === f.email && u.password === f.password); if (!u) return toast('⚠️ Wrong email or password');
+    user = { name: u.name, email: u.email };
+  }
+  if (type === 'signup' || type === 'login') {
+    save('myshop_user', user); toast('👋 Welcome, ' + user.name); nav(nextRoute || '#/'); nextRoute = ''; return;
+  }
+  if (type === 'order') {
+    const { pay, ...addr } = f, all = ls('myshop_orders', []), id = 'MS' + Date.now().toString().slice(-8);
+    all.push({ id, email: addr.email || '', date: Date.now(), items: cart, total: cartTotal(), pay, addr }); sendOrder(all[all.length - 1]);
+    save('myshop_orders', all); save('myshop_addr', addr); cart = []; persist(); toast(SHOP_WHATSAPP ? '🎉 Order placed! Tap Send order on WhatsApp' : '🎉 Order placed!'); nav('#/orders');
+  }
+});
+document.addEventListener('click', e => { const a = e.target.closest('a[href^="#/"]'); if (a) { e.preventDefault(); nav(a.getAttribute('href')); } });
+persist(); render();
+
+if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+</script>
+</body>
+</html>
